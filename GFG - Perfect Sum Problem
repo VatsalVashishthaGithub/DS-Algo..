@@ -1,0 +1,24 @@
+class Solution {
+  public:
+    int n;
+    int solve(vector<int>& arr,int idx, int target, vector<vector<int>>& dp){
+        if(target < 0) return 0;
+        if(idx == n){
+            if(target == 0) return 1;
+            return 0;
+        }
+        if(dp[idx][target] != -1) return dp[idx][target];
+        // picking the current element..
+        int pick = solve(arr,idx+1,target-arr[idx],dp);
+        // not-pick the current element..
+        int not_pick = solve(arr,idx+1,target,dp);
+        return dp[idx][target] = (pick + not_pick);
+    }
+    int perfectSum(vector<int>& arr, int target) {
+        // code here
+        n = arr.size();
+        vector<int> ans;
+        vector<vector<int>> dp(n+1, vector<int>(target+1,-1));
+        return solve(arr,0,target,dp);
+    }
+};
